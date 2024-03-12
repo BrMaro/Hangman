@@ -2,6 +2,95 @@ import random
 from words import wordlist
 
 
+def display_hangman(incorrect_guesses):
+    hangman_graphics = [
+        """
+
+         -----
+         |   |
+             |
+             |
+             |
+             |
+        ------
+        """
+        ,
+        """
+        WRONG!
+        
+         -----
+         |   |
+         O   |
+             |
+             |
+             |
+        ------
+        """
+        ,
+        """
+        WRONG!
+        
+         -----
+         |   |
+         O   |
+         |   |
+             |
+             |
+        ------
+        """
+        ,
+        """
+        WRONG!
+        
+         -----
+         |   |
+         O   |
+        /|   |
+             |
+             |
+        ------
+        """
+        ,
+        """
+        WRONG!
+        
+         -----
+         |   |
+         O   |
+        /|\\  |
+             |
+             |
+        ------
+        """
+        ,
+        """
+        WRONG!
+        
+         -----
+         |   |
+         O   |
+        /|\\  |
+        /    |
+             |
+        ------
+        """
+        ,
+        """
+        WRONG!
+        
+         -----
+         |   |
+         O   |
+        /|\\  |
+        / \\  |
+             |
+        ------
+        """
+    ]
+
+    return hangman_graphics[incorrect_guesses]
+
+
 def getValidWord(list):
     word = random.choice(list)
     while "-" in word or " " in word:
@@ -35,10 +124,13 @@ print("              HANGMAN GAME")
 print("")
 
 chances = 6
+incorrect_guesses = 0
 word = getValidWord(wordlist)
 blanks = blankword(word)
 print(blanks)
 print("")
+print(display_hangman(incorrect_guesses))
+
 while chances <= 6 and chances > 0:
     guesstype = input("Have you figured it out?(y for yes or n for no): ")
     if guesstype == "n":
@@ -56,6 +148,8 @@ while chances <= 6 and chances > 0:
                 print("Congratulations!You Won")
                 break
         else:
+            incorrect_guesses+=1
+            print(display_hangman(incorrect_guesses))
             chances = chances - 1
             if chances != 0:
                 print(f"Guess again,{chances} guesses remaining.")
@@ -70,6 +164,9 @@ while chances <= 6 and chances > 0:
             break
         else:
             print("Incorrect word!")
+            incorrect_guesses+=1
+            print(display_hangman(incorrect_guesses))
+
             chances = chances - 1
             print(f"Guess again,{chances} guesses remaining.")
     else:
